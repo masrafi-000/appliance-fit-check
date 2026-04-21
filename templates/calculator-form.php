@@ -48,29 +48,30 @@ if ( ! defined( 'ABSPATH' ) ) {
           <option value="">Select Appliance Type</option>
           <option value="dishwasher">Dishwasher</option>
           <option value="refrigerator">Refrigerator</option>
+          <option value="wall-oven">Wall Oven</option>
         </select>
       </div>
 
       <div class="flex flex-col gap-2 mt-1">
         <label for="afc-prod-height" class="text-base font-semibold text-[#f0e6d3]! my-1">Step 2: Enter Product dimension</label>
-        <div class="text-xs text-[#9a8870]! text-center">Enter your product dimensions manually (take less than 60 seconds).</div>
+        <div class="text-sm text-[#9a8870]! text-center">Enter your product dimensions manually (take less than 60 seconds).</div>
 
         <div class="border! border-[#E9B535]! px-3! py-3! rounded-2xl! bg-[#E9B535]/5!">
-          <div class="text-xs font-semibold text-[#c8b99a]! mb-2">Use exact measurements (example: 30.5)</div>
+          <div class="text-sm font-semibold text-[#f0e6d3]! mb-2">Use exact measurements (example: 30.5)</div>
           <div class="grid grid-cols-3 border! border-[#5a3f20]! rounded-lg! overflow-hidden">
             <div class="flex flex-col border-r! border-[#5a3f20]!">
               <div class="text-xs font-medium text-[#c8b99a]! px-2.5 py-2 border-b! border-[#5a3f20]! bg-white/3">Height</div>
-              <input type="number" name="product_height" id="afc-prod-height" placeholder="Height"
+              <input type="number" name="product_height" id="afc-prod-height" placeholder="Height" min="0" step="0.1" onkeypress="return /[0-9.]/i.test(event.key)"
                 class="afc-input bg-transparent! border-none! outline-none text-[#f0e6d3]! text-sm font-medium px-2.5 py-2 w-full" />
             </div>
             <div class="flex flex-col border-r! border-[#5a3f20]!">
               <div class="text-xs font-medium text-[#c8b99a]! px-2.5 py-2 border-b! border-[#5a3f20]! bg-white/3">Width</div>
-              <input type="number" name="product_width" id="afc-prod-width" placeholder="Width"
+              <input type="number" name="product_width" id="afc-prod-width" placeholder="Width" min="0" step="0.1" onkeypress="return /[0-9.]/i.test(event.key)"
                 class="afc-input bg-transparent! border-none! outline-none text-[#f0e6d3]! text-sm font-medium px-2.5 py-2 w-full" />
             </div>
             <div class="flex flex-col">
               <div class="text-xs font-medium text-[#c8b99a]! px-2.5 py-2 border-b! border-[#5a3f20]! bg-white/3">Depth</div>
-              <input type="number" name="product_depth" id="afc-prod-depth" placeholder="Depth"
+              <input type="number" name="product_depth" id="afc-prod-depth" placeholder="Depth" min="0" step="0.1" onkeypress="return /[0-9.]/i.test(event.key)"
                 class="afc-input bg-transparent! border-none! outline-none text-[#f0e6d3]! text-sm font-medium px-2.5 py-2 w-full" />
             </div>
           </div>
@@ -86,19 +87,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 
           <div class="border! border-[#5a3f20]! rounded-lg! overflow-hidden">
             <div class="text-xs font-medium text-[#c8b99a]! px-3 py-2 border-b! border-[#5a3f20]! bg-white/3">Height</div>
-            <input type="number" name="space_height" id="afc-space-height" placeholder="Height"
+            <input type="number" name="space_height" id="afc-space-height" placeholder="Height" min="0" step="0.1" onkeypress="return /[0-9.]/i.test(event.key)"
               class="afc-input bg-transparent! border-none! outline-none text-[#f0e6d3]! text-sm font-medium px-3 py-2 w-full" />
           </div>
 
           <div class="border! border-[#5a3f20]! rounded-lg! overflow-hidden">
             <div class="text-xs font-medium text-[#c8b99a]! px-3 py-2 border-b! border-[#5a3f20]! bg-white/3">Width</div>
-            <input type="number" name="space_width" id="afc-space-width" placeholder="Width"
+            <input type="number" name="space_width" id="afc-space-width" placeholder="Width" min="0" step="0.1" onkeypress="return /[0-9.]/i.test(event.key)"
               class="afc-input bg-transparent! border-none! outline-none text-[#f0e6d3]! text-sm font-medium px-3 py-2 w-full" />
           </div>
 
           <div class="border! border-[#5a3f20]! rounded-lg! overflow-hidden">
             <div class="text-xs font-medium text-[#c8b99a]! px-3 py-2 border-b! border-[#5a3f20]! bg-white/3">Depth</div>
-            <input type="number" name="space_depth" id="afc-space-depth" placeholder="Depth"
+            <input type="number" name="space_depth" id="afc-space-depth" placeholder="Depth" min="0" step="0.1" onkeypress="return /[0-9.]/i.test(event.key)"
               class="afc-input bg-transparent! border-none! outline-none text-[#f0e6d3]! text-sm font-medium px-3 py-2 w-full" />
           </div>
         </div>

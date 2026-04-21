@@ -78,7 +78,8 @@
 
     function parseInput(val) {
         var v = parseFloat(val);
-        return isNaN(v) ? null : v;
+        // Reject non-numbers, negative numbers, or suspicious values (> 200)
+        return (isNaN(v) || v < 0 || v > 200) ? null : v;
     }
 
     /* ------------------------------------------------------------------ */
@@ -96,8 +97,13 @@
         var foundName     = document.getElementById('afc-found-name');
         var fH = document.getElementById('afc-f-height'), fW = document.getElementById('afc-f-width'), fD = document.getElementById('afc-f-depth');
 
-        var prodH = document.getElementById('afc-prod-height'), prodW = document.getElementById('afc-prod-width'), prodD = document.getElementById('afc-prod-depth');
-        var spcH  = document.getElementById('afc-space-height'), spcW  = document.getElementById('afc-space-width'), spcD  = document.getElementById('afc-space-depth');
+        var dimensionInputs = [
+            document.getElementById('afc-prod-height'), document.getElementById('afc-prod-width'), document.getElementById('afc-prod-depth'),
+            document.getElementById('afc-space-height'), document.getElementById('afc-space-width'), document.getElementById('afc-space-depth')
+        ];
+        
+        var prodH = dimensionInputs[0], prodW = dimensionInputs[1], prodD = dimensionInputs[2];
+        var spcH  = dimensionInputs[3], spcW  = dimensionInputs[4], spcD  = dimensionInputs[5];
         
         var checkBtn      = document.getElementById('afc-check-btn');
         var errorBox      = document.getElementById('afc-error');
@@ -108,6 +114,26 @@
         var resBadge = document.getElementById('afc-result-badge');
         var resIcon  = document.getElementById('afc-result-icon');
         var resLabel = document.getElementById('afc-result-label');
+
+        /* ---- Sanitization Logic ---- */
+        dimensionInputs.forEach(function(input) {
+            if (!input) return;
+            input.addEventListener('input', function() {
+                // Remove anything that isn't a digit or decimal point
+                var sanitized = this.value.replace(/[^0-9.]/g, '');
+                
+                // Prevent multiple decimals
+                var parts = sanitized.split('.');
+                if (parts.length > 2) {
+                    sanitized = parts[0] + '.' + parts.slice(1).join('');
+                }
+                
+                if (this.value !== sanitized) {
+                    this.value = sanitized;
+                }
+                hide(errorBox);
+            });
+        });
 
         /* ---- Lookup Logic ---- */
         if (lookupBtn && modelInput) {
@@ -149,7 +175,7 @@
 
                 if (ph === null || pw === null || pd === null || sh === null || sw === null || sd === null) {
                     if (errorBox) {
-                        errorBox.textContent = 'Please fill all dimension fields.';
+                        errorBox.textContent = 'Please enter valid dimensions between 0 and 200.';
                         show(errorBox);
                     }
                     return;
