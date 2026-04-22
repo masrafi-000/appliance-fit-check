@@ -1,227 +1,278 @@
 /**
  * Appliance Fit Check — Frontend Logic
- * Version: 1.2.0 (Target Design Match)
+ * Version: 2.0.0 (AJAX + Dynamic Modal)
  */
 
-(function () {
+(function ($) {
     'use strict';
 
     /* ------------------------------------------------------------------ */
-    /*  Constants & Mock Data                                             */
+    /*  Result Config                                                       */
     /* ------------------------------------------------------------------ */
 
-    var MOCK_MODELS = {
-        'WDT750SAHZ': { name: 'Whirlpool WDT750SAHZ', h: 34.5, w: 23.9, d: 24.5 },
-        'LDF5545ST' : { name: 'LG LDF5545ST', h: 33.6, w: 23.8, d: 24.6 },
-        'SHEM63W55N': { name: 'Bosch SHEM63W55N', h: 33.9, w: 23.6, d: 23.8 }
-    };
-
-    var RESULTS = {
-        PERFECT : { 
-            key: 'afc-perfect', label: 'Fits Perfectly', icon: '✓', rank: 0,
-            classes: 'bg-emerald-500/10 border-emerald-500/50 text-emerald-100',
-            iconClasses: 'bg-emerald-500 shadow-[0_0_15px_rgba(16,185,129,0.4)]'
+    var RESULT_CONFIG = {
+        PERFECT: {
+            // Banner gradient
+            bannerFrom: '#ecfdf5', bannerTo: '#ffffff',
+            // Ring bg colour
+            ringColor: '#6ee7b7',
+            // Circle gradient
+            circleFrom: '#34d399', circleTo: '#059669',
+            circleShadow: 'shadow-emerald-200',
+            // Icon inside circle
+            circleIcon: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>',
+            // Status label colour & icon
+            labelColor: '#10b981',
+            labelIcon: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block"><polyline points="20 6 9 17 4 12"/></svg>',
+            // Sub text
+            subText: 'Your appliance fits securely and meets<br>clearance guidelines.',
+            // Notice box
+            noticeBg: 'bg-sky-50', noticeBorder: 'border-sky-100',
+            noticeIconBg: '#3b82f6',
+            noticeIconChar: 'i',
+            noticeTitle: 'Clearance Available',
+            noticeTitleColor: '#0369a1',
+            noticeSub: 'You have enough space for proper ventilation and easy installation.',
+            noticeSubColor: '#38bdf8',
         },
-        TIGHT   : { 
-            key: 'afc-tight', label: 'Tight Fit', icon: '!', rank: 1,
-            classes: 'bg-amber-500/10 border-amber-500/50 text-amber-100',
-            iconClasses: 'bg-amber-500 shadow-[0_0_15px_rgba(245,158,11,0.4)]'
+        TIGHT: {
+            bannerFrom: '#fffbeb', bannerTo: '#ffffff',
+            ringColor: '#fcd34d',
+            circleFrom: '#fbbf24', circleTo: '#d97706',
+            circleShadow: 'shadow-amber-200',
+            circleIcon: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
+            labelColor: '#f59e0b',
+            labelIcon: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
+            subText: 'The appliance will fit, but clearance is minimal.<br>Installation may be tricky.',
+            noticeBg: 'bg-amber-50', noticeBorder: 'border-amber-100',
+            noticeIconBg: '#f59e0b',
+            noticeIconChar: '!',
+            noticeTitle: 'Tight Clearance',
+            noticeTitleColor: '#92400e',
+            noticeSub: 'Minimal clearance detected. Ensure ventilation requirements are met.',
+            noticeSubColor: '#d97706',
         },
-        MODIFY  : { 
-            key: 'afc-modify', label: 'Adjustment Needed', icon: '⚒', rank: 2,
-            classes: 'bg-orange-500/10 border-orange-500/50 text-orange-100',
-            iconClasses: 'bg-orange-500 shadow-[0_0_15px_rgba(249,115,22,0.4)]'
+        MODIFY: {
+            bannerFrom: '#fff7ed', bannerTo: '#ffffff',
+            ringColor: '#fdba74',
+            circleFrom: '#fb923c', circleTo: '#ea580c',
+            circleShadow: 'shadow-orange-200',
+            circleIcon: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>',
+            labelColor: '#f97316',
+            labelIcon: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>',
+            subText: 'Minor adjustments needed.<br>The space requires slight modification.',
+            noticeBg: 'bg-orange-50', noticeBorder: 'border-orange-100',
+            noticeIconBg: '#f97316',
+            noticeIconChar: '⚒',
+            noticeTitle: 'Adjustment Required',
+            noticeTitleColor: '#9a3412',
+            noticeSub: 'Small modifications to the opening may be necessary before installation.',
+            noticeSubColor: '#ea580c',
         },
-        NOFIT   : { 
-            key: 'afc-nofit', label: 'Does Not Fit', icon: '✕', rank: 3,
-            classes: 'bg-rose-500/10 border-rose-500/50 text-rose-100',
-            iconClasses: 'bg-rose-500 shadow-[0_0_15px_rgba(244,63,94,0.4)]'
+        NOFIT: {
+            bannerFrom: '#fff1f2', bannerTo: '#ffffff',
+            ringColor: '#fda4af',
+            circleFrom: '#f43f5e', circleTo: '#be123c',
+            circleShadow: 'shadow-rose-200',
+            circleIcon: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>',
+            labelColor: '#f43f5e',
+            labelIcon: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>',
+            subText: 'This appliance does not fit the space.<br>Please choose a different model or size.',
+            noticeBg: 'bg-rose-50', noticeBorder: 'border-rose-100',
+            noticeIconBg: '#f43f5e',
+            noticeIconChar: '✕',
+            noticeTitle: 'Does Not Fit',
+            noticeTitleColor: '#9f1239',
+            noticeSub: 'The appliance exceeds the available space. Consider a smaller model.',
+            noticeSubColor: '#f43f5e',
         }
     };
 
-    /* ------------------------------------------------------------------ */
-    /*  Logic                                                            */
-    /* ------------------------------------------------------------------ */
-
-    function classifyClearance(clearance) {
-        if (clearance >= 0.25)                       return RESULTS.PERFECT;
-        if (clearance >= 0.00 && clearance <= 0.24)  return RESULTS.TIGHT;
-        if (clearance >= -0.25 && clearance <= -0.01) return RESULTS.MODIFY;
-        return RESULTS.NOFIT;
-    }
-
-    function worstResult(results) {
-        return results.reduce(function (worst, r) {
-            return r.rank > worst.rank ? r : worst;
-        }, results[0]);
-    }
-
-    function checkFit(product, space) {
-        var dims = ['height', 'width', 'depth'];
-        return {
-            overall: worstResult(dims.map(function (dim) {
-                return classifyClearance(Math.round((space[dim] - product[dim]) * 100) / 100);
-            })),
-            dimensions: dims.map(function (dim) {
-                var clearance = Math.round((space[dim] - product[dim]) * 100) / 100;
-                return { dim: dim, val: clearance, result: classifyClearance(clearance) };
-            })
-        };
-    }
+    /* Appliance type icons */
+    var APPLIANCE_ICONS = {
+        'dishwasher': '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><circle cx="8" cy="6" r="0.8" fill="#475569"/><path d="M8 14h8M8 17h5"/></svg>',
+        'refrigerator': '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M4 10h16"/><path d="M9 6v2M9 14v4"/></svg>',
+        'wall-oven': '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><rect x="6" y="8" width="12" height="9" rx="1"/><circle cx="8" cy="6" r="0.8" fill="#475569"/><circle cx="12" cy="6" r="0.8" fill="#475569"/><circle cx="16" cy="6" r="0.8" fill="#475569"/></svg>',
+        '': '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><rect x="6" y="8" width="12" height="9" rx="1"/><circle cx="8" cy="6" r="0.8" fill="#475569"/><circle cx="12" cy="6" r="0.8" fill="#475569"/><circle cx="16" cy="6" r="0.8" fill="#475569"/></svg>',
+    };
 
     /* ------------------------------------------------------------------ */
-    /*  UI Helpers                                                       */
+    /*  Helpers                                                            */
     /* ------------------------------------------------------------------ */
-
-    function show(el) { if(el) el.classList.remove('hidden'); }
-    function hide(el) { if(el) el.classList.add('hidden'); }
 
     function parseInput(val) {
         var v = parseFloat(val);
-        // Reject non-numbers, negative numbers, or suspicious values (> 200)
         return (isNaN(v) || v < 0 || v > 200) ? null : v;
     }
 
+    function formatDim(val) {
+        return val + '"';
+    }
+
+    function labelFromType(type) {
+        var map = { 'dishwasher': 'Dishwasher', 'refrigerator': 'Refrigerator', 'wall-oven': 'Wall Oven' };
+        return map[type] || 'Appliance';
+    }
+
     /* ------------------------------------------------------------------ */
-    /*  Init                                                             */
+    /*  Modal Population                                                   */
+    /* ------------------------------------------------------------------ */
+
+    function populateModal(data) {
+        var inputs  = data.inputs;
+        var overall = data.overall;
+        var cfg     = RESULT_CONFIG[overall.key] || RESULT_CONFIG.PERFECT;
+        var type    = data.appliance_type || '';
+
+        /* --- Header --- */
+        var icon = APPLIANCE_ICONS[type] || APPLIANCE_ICONS[''];
+        $('#afc-modal-appliance-icon').html(icon);
+        $('#afc-modal-appliance-type').text(labelFromType(type));
+        $('#afc-modal-date').text('Checked on: ' + data.date);
+
+        /* --- Banner --- */
+        $('#afc-modal-banner').css('background', 'linear-gradient(to bottom, ' + cfg.bannerFrom + ', ' + cfg.bannerTo + ')');
+
+        /* Ring */
+        $('#afc-status-ring').css('background-color', cfg.ringColor);
+
+        /* Circle */
+        $('#afc-status-circle')
+            .css('background', 'linear-gradient(to bottom right, ' + cfg.circleFrom + ', ' + cfg.circleTo + ')')
+            .css('box-shadow', '0 10px 15px -3px ' + cfg.ringColor)
+            .html(cfg.circleIcon);
+
+        /* Status label */
+        $('#afc-status-label')
+            .css('color', cfg.labelColor)
+            .html(cfg.labelIcon + ' ' + overall.label);
+
+        /* Sub text */
+        $('#afc-status-sub').html(cfg.subText);
+
+        /* --- Dimension cards --- */
+        $('#afc-prod-h-display').text(formatDim(inputs.prod_height));
+        $('#afc-prod-w-display').text(formatDim(inputs.prod_width));
+        $('#afc-prod-d-display').text(formatDim(inputs.prod_depth));
+
+        $('#afc-space-h-display').text(formatDim(inputs.space_height));
+        $('#afc-space-w-display').text(formatDim(inputs.space_width));
+        $('#afc-space-d-display').text(formatDim(inputs.space_depth));
+
+        /* --- Clearance notice --- */
+        var $notice = $('#afc-clearance-notice');
+        $notice.attr('class', 'flex items-start gap-3 rounded-2xl px-4 py-3 border ' + cfg.noticeBg + ' ' + cfg.noticeBorder);
+
+        $('#afc-notice-icon-wrap').css('background-color', cfg.noticeIconBg);
+        $('#afc-notice-icon-char').text(cfg.noticeIconChar);
+        $('#afc-notice-title').text(cfg.noticeTitle).css('color', cfg.noticeTitleColor);
+        $('#afc-notice-sub').html(cfg.noticeSub).css('color', cfg.noticeSubColor);
+    }
+
+    /* ------------------------------------------------------------------ */
+    /*  Modal Open / Close                                                 */
+    /* ------------------------------------------------------------------ */
+
+    function openModal() {
+        $('#afc-modal-overlay').addClass('afc-open');
+        $('body').css('overflow', 'hidden');
+    }
+
+    function closeModal() {
+        $('#afc-modal-overlay').removeClass('afc-open');
+        $('body').css('overflow', '');
+    }
+
+    function openErrorModal(msg) {
+        $('#afc-error-msg').text(msg);
+        $('#afc-error-overlay').addClass('afc-open');
+        $('body').css('overflow', 'hidden');
+    }
+
+    function closeErrorModal() {
+        $('#afc-error-overlay').removeClass('afc-open');
+        $('body').css('overflow', '');
+    }
+
+    /* ------------------------------------------------------------------ */
+    /*  Init                                                              */
     /* ------------------------------------------------------------------ */
 
     function init() {
-        var wrapper = document.getElementById('afc-calculator');
-        if (!wrapper) return;
+        var $wrapper = $('#afc-calculator');
+        if (!$wrapper.length) return;
 
-        // Form elements
-        var modelInput    = document.getElementById('afc-model-num');
-        var lookupBtn     = document.getElementById('afc-lookup-btn');
-        var modelFoundUI  = document.getElementById('afc-model-found');
-        var foundName     = document.getElementById('afc-found-name');
-        var fH = document.getElementById('afc-f-height'), fW = document.getElementById('afc-f-width'), fD = document.getElementById('afc-f-depth');
+        var $checkBtn = $('#afc-check-btn');
 
-        var dimensionInputs = [
-            document.getElementById('afc-prod-height'), document.getElementById('afc-prod-width'), document.getElementById('afc-prod-depth'),
-            document.getElementById('afc-space-height'), document.getElementById('afc-space-width'), document.getElementById('afc-space-depth')
-        ];
-        
-        var prodH = dimensionInputs[0], prodW = dimensionInputs[1], prodD = dimensionInputs[2];
-        var spcH  = dimensionInputs[3], spcW  = dimensionInputs[4], spcD  = dimensionInputs[5];
-        
-        var checkBtn      = document.getElementById('afc-check-btn');
-        var errorBox      = document.getElementById('afc-error');
-        var resultBox     = document.getElementById('afc-result');
-        var resetBtn      = document.getElementById('afc-reset-btn');
-
-        // Results elements
-        var resBadge = document.getElementById('afc-result-badge');
-        var resIcon  = document.getElementById('afc-result-icon');
-        var resLabel = document.getElementById('afc-result-label');
-
-        /* ---- Sanitization Logic ---- */
-        dimensionInputs.forEach(function(input) {
-            if (!input) return;
-            input.addEventListener('input', function() {
-                // Remove anything that isn't a digit or decimal point
-                var sanitized = this.value.replace(/[^0-9.]/g, '');
-                
-                // Prevent multiple decimals
-                var parts = sanitized.split('.');
-                if (parts.length > 2) {
-                    sanitized = parts[0] + '.' + parts.slice(1).join('');
-                }
-                
-                if (this.value !== sanitized) {
-                    this.value = sanitized;
-                }
-                hide(errorBox);
-            });
+        /* Input sanitization */
+        $('input[type=number]', $wrapper).on('input', function () {
+            var sanitized = this.value.replace(/[^0-9.]/g, '');
+            var parts = sanitized.split('.');
+            if (parts.length > 2) sanitized = parts[0] + '.' + parts.slice(1).join('');
+            if (this.value !== sanitized) this.value = sanitized;
         });
 
-        /* ---- Lookup Logic ---- */
-        if (lookupBtn && modelInput) {
-            lookupBtn.addEventListener('click', function () {
-                hide(errorBox);
-                var query = modelInput.value.trim().toUpperCase();
-                
-                if (MOCK_MODELS[query]) {
-                    var model = MOCK_MODELS[query];
-                    if (foundName) foundName.textContent = model.name;
-                    if (fH) fH.textContent = model.h + ' in';
-                    if (fW) fW.textContent = model.w + ' in';
-                    if (fD) fD.textContent = model.d + ' in';
-                    
-                    // Auto-populate manual fields as well
-                    if (prodH) prodH.value = model.h;
-                    if (prodW) prodW.value = model.w;
-                    if (prodD) prodD.value = model.d;
-                    
-                    show(modelFoundUI);
-                } else {
-                    hide(modelFoundUI);
-                    if (errorBox) {
-                        errorBox.textContent = 'Model not found. Please enter dimensions manually.';
-                        show(errorBox);
-                    }
-                }
-            });
-        }
+        /* Close result modal */
+        $('#afc-modal-close').on('click', closeModal);
+        $('#afc-modal-overlay').on('click', function (e) {
+            if ($(e.target).is('#afc-modal-overlay')) closeModal();
+        });
 
-        /* ---- Check Fit ---- */
-        if (checkBtn) {
-            checkBtn.addEventListener('click', function () {
-                hide(errorBox);
-                hide(resultBox);
+        /* Close error modal */
+        $('#afc-error-modal-close, #afc-error-dismiss').on('click', closeErrorModal);
+        $('#afc-error-overlay').on('click', function (e) {
+            if ($(e.target).is('#afc-error-overlay')) closeErrorModal();
+        });
 
-                var ph = parseInput(prodH.value), pw = parseInput(prodW.value), pd = parseInput(prodD.value);
-                var sh = parseInput(spcH.value), sw = parseInput(spcW.value), sd = parseInput(spcD.value);
+        /* Check Fit — AJAX */
+        $checkBtn.on('click', function () {
+            var ph = parseInput($('#afc-prod-height').val());
+            var pw = parseInput($('#afc-prod-width').val());
+            var pd = parseInput($('#afc-prod-depth').val());
+            var sh = parseInput($('#afc-space-height').val());
+            var sw = parseInput($('#afc-space-width').val());
+            var sd = parseInput($('#afc-space-depth').val());
 
-                if (ph === null || pw === null || pd === null || sh === null || sw === null || sd === null) {
-                    if (errorBox) {
-                        errorBox.textContent = 'Please enter valid dimensions between 0 and 200.';
-                        show(errorBox);
-                    }
-                    return;
-                }
-
-                var fit = checkFit(
-                    { height: ph, width: pw, depth: pd },
-                    { height: sh, width: sw, depth: sd }
-                );
-
-                // Update UI
-                if (resBadge) resBadge.className = 'p-6 rounded-2xl border-2 text-center space-y-2 transition-all duration-500 ' + fit.overall.classes;
-                if (resIcon) {
-                    resIcon.className  = 'w-12 h-12 mx-auto rounded-full flex items-center justify-center text-xl text-white ' + fit.overall.iconClasses;
-                    resIcon.textContent = fit.overall.icon;
-                }
-                if (resLabel) resLabel.textContent = fit.overall.label;
-
-                show(resultBox);
-                resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            });
-        }
-
-        /* ---- Reset ---- */
-        if (resetBtn) {
-            resetBtn.addEventListener('click', function () {
-                [modelInput, prodH, prodW, prodD, spcH, spcW, spcD].forEach(function(i) { if(i) i.value = ''; });
-                hide(modelFoundUI);
-                hide(resultBox);
-                hide(errorBox);
-                wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            });
-        }
-
-        // Hide errors on input
-        [modelInput, prodH, prodW, prodD, spcH, spcW, spcD].forEach(function(input) {
-            if (input) {
-                input.addEventListener('input', function() { hide(errorBox); });
+            if (ph === null || pw === null || pd === null || sh === null || sw === null || sd === null) {
+                openErrorModal('Please enter valid dimensions (0 – 200) in all 6 fields before checking.');
+                return;
             }
+
+            /* Loading state */
+            $checkBtn.text('Checking…').css('opacity', '0.75').css('pointer-events', 'none');
+
+            $.ajax({
+                url: AFC_SETTINGS.ajax_url,
+                type: 'POST',
+                data: {
+                    action:       'afc_check_fit',
+                    nonce:        AFC_SETTINGS.nonce,
+                    appliance_type: $('#afc-appliance-type').val(),
+                    prod_height:  ph,
+                    prod_width:   pw,
+                    prod_depth:   pd,
+                    space_height: sh,
+                    space_width:  sw,
+                    space_depth:  sd,
+                },
+                success: function (response) {
+                    $checkBtn.text('Check My Fit').css('opacity', '').css('pointer-events', '');
+                    if (response.success) {
+                        populateModal(response.data);
+                        openModal();
+                    } else {
+                        var msg = (response.data && response.data.message) ? response.data.message : 'An error occurred.';
+                        openErrorModal(msg);
+                    }
+                },
+                error: function () {
+                    $checkBtn.text('Check My Fit').css('opacity', '').css('pointer-events', '');
+                    openErrorModal('Server error. Please try again.');
+                }
+            });
         });
     }
 
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
-    } else {
-        init();
-    }
+    $(document).ready(init);
 
-})();
+}(jQuery));
