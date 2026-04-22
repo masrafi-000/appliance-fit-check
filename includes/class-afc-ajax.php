@@ -21,7 +21,7 @@ class AFC_Ajax {
 
         foreach ( $fields as $field ) {
             $val = isset( $_POST[ $field ] ) ? floatval( $_POST[ $field ] ) : null;
-            if ( $val === null || $val < 0 || $val > 200 ) {
+            if ( $val === null || $val < 0 ) {
                 wp_send_json_error( array( 'message' => 'Invalid input: ' . $field ) );
             }
             $data[ $field ] = $val;

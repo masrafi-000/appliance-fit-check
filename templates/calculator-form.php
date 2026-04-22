@@ -12,12 +12,12 @@ if ( ! defined( 'ABSPATH' ) ) {
   .afc-select {
     appearance: none;
     -webkit-appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23E9B535' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 14px center;
   }
-  .afc-input::placeholder { color: #7a6a55; }
-  .afc-select option { background-color: #3a2a1a; color: #f0e6d3; }
+  .afc-input::placeholder { color: #94a3b8; }
+  .afc-select option { background-color: #ffffff; color: #1e293b; }
 
   /* Remove spin buttons from number inputs */
   input::-webkit-outer-spin-button,
@@ -94,20 +94,20 @@ if ( ! defined( 'ABSPATH' ) ) {
   .app-btn { position:relative; overflow:hidden; }
 </style>
 
-<div id="afc-calculator" class="flex flex-col items-center justify-center border! border-[#E9B535]! rounded-2xl! px-2! py-5! max-w-xl mx-auto h-auto bg-[#2a1f14]! text-[#f0e6d3]! w-full">
+<div id="afc-calculator" class="flex flex-col items-center justify-center border! border-slate-200! rounded-2xl! px-2! py-5! max-w-xl mx-auto h-auto bg-[#F5F6FA]! text-slate-800! w-full shadow-lg">
 
   <div class="w-full px-2 pt-2 pb-4">
 
-    <div class="text-center text-2xl font-bold mb-4 tracking-wide text-[#f0e6d3]">Check Appliance Fit</div>
+    <div class="text-center text-2xl font-bold mb-4 tracking-wide text-slate-800">Check Appliance Fit</div>
 
     <form action="submit" class="flex flex-col gap-4">
 
       <div class="flex flex-col gap-2">
-        <div class="text-base font-semibold text-[#f0e6d3]!">Step 1: Select Appliance Type</div>
+        <div class="text-base font-semibold text-slate-700!">Step 1: Select Appliance Type</div>
         <select
           name="appliance_type"
           id="afc-appliance-type"
-          class="afc-select w-full bg-[#3a2a1a]! text-[#f0e6d3]! border! border-[#6b4f2c]! rounded-xl px-4 py-3 text-base font-medium cursor-pointer outline-none focus:border-[#E9B535] transition-colors"
+          class="afc-select! w-full bg-white! text-slate-800! border! border-slate-200! rounded-lg! px-4! py-2! text-base! font-medium! cursor-pointer! outline-none! focus:border-slate-400! transition-colors! shadow-sm!"
         >
           <option value="">Select Appliance Type</option>
           <option value="dishwasher">Dishwasher</option>
@@ -117,29 +117,29 @@ if ( ! defined( 'ABSPATH' ) ) {
       </div>
 
       <div class="flex flex-col gap-2 mt-1">
-        <div class="text-base font-semibold text-[#f0e6d3]! my-1">Step 2: Enter Product dimension</div>
-        <div class="text-sm text-[#9a8870]! text-left">Enter your product dimensions manually (take less than 60 seconds).</div>
+        <div class="text-base font-semibold text-slate-700! my-1">Step 2: Enter Product dimension</div>
+        <div class="text-sm text-slate-500! text-left">Enter your product dimensions manually (take less than 60 seconds).</div>
 
-        <div class="border! border-[#E9B535]! px-3! py-3! rounded-2xl! bg-[#E9B535]/5!">
-          <div class="text-sm font-semibold text-[#f0e6d3]! mb-2">Use exact measurements (example: 30.5)</div>
-          <div class="grid grid-cols-3 border! border-[#5a3f20]! rounded-lg! overflow-hidden">
-            <div class="relative flex flex-col border-r! border-[#5a3f20]!">
-              <div class="text-base font-medium text-[#c8b99a]! px-2.5 py-2 border-b! border-[#5a3f20]! bg-white/3">Height</div>
+        <div class="border! border-slate-200! px-3! py-3! rounded-2xl! bg-white!">
+          <div class="text-sm font-semibold text-slate-700! mb-2">Use exact measurements (example: 30.5)</div>
+          <div class="grid grid-cols-3 border! border-slate-200! rounded-lg! overflow-hidden">
+            <div class="relative flex flex-col border-r! border-slate-200!">
+              <div class="text-base font-medium text-slate-500! px-2.5 py-2 border-b! border-slate-200! bg-slate-50!">Height</div>
               <input type="number" name="product_height" id="afc-prod-height" placeholder="Ex: 32.5" min="0" step="0.1" onkeypress="return /[0-9.]/i.test(event.key)"
-                class="afc-input bg-transparent! border-none! outline-none text-[#f0e6d3]! text-base font-medium px-2.5 pr-8 py-2 w-full" />
-                <div class="absolute right-2.5 bottom-2 text-base text-[#c8b99a]! pointer-events-none">in</div>
+                class="afc-input bg-transparent! border-none! outline-none text-slate-800! text-base font-medium px-2.5 pr-8 py-2 w-full" />
+                <div class="absolute right-2.5 bottom-2 text-base text-slate-400! pointer-events-none">in</div>
             </div>
-            <div class="relative flex flex-col border-r! border-[#5a3f20]!">
-              <div class="text-base font-medium text-[#c8b99a]! px-2.5 py-2 border-b! border-[#5a3f20]! bg-white/3">Width</div>
+            <div class="relative flex flex-col border-r! border-slate-200!">
+              <div class="text-base font-medium text-slate-500! px-2.5 py-2 border-b! border-slate-200! bg-slate-50!">Width</div>
               <input type="number" name="product_width" id="afc-prod-width" placeholder="Ex: 30" min="0" step="0.1" onkeypress="return /[0-9.]/i.test(event.key)"
-                class="afc-input bg-transparent! border-none! outline-none text-[#f0e6d3]! text-base font-medium px-2.5 pr-8 py-2 w-full" />
-                <div class="absolute right-2.5 bottom-2 text-base text-[#c8b99a]! pointer-events-none">in</div>
+                class="afc-input bg-transparent! border-none! outline-none text-slate-800! text-base font-medium px-2.5 pr-8 py-2 w-full" />
+                <div class="absolute right-2.5 bottom-2 text-base text-slate-400! pointer-events-none">in</div>
             </div>
             <div class="relative flex flex-col">
-              <div class="text-base font-medium text-[#c8b99a]! px-2.5 py-2 border-b! border-[#5a3f20]! bg-white/3">Depth</div>
+              <div class="text-base font-medium text-slate-500! px-2.5 py-2 border-b! border-slate-200! bg-slate-50!">Depth</div>
               <input type="number" name="product_depth" id="afc-prod-depth" placeholder="Ex: 30.2" min="0" step="0.1" onkeypress="return /[0-9.]/i.test(event.key)"
-                class="afc-input bg-transparent! border-none! outline-none text-[#f0e6d3]! text-base font-medium px-2.5 pr-8 py-2 w-full" />
-                <div class="absolute right-2.5 bottom-2 text-base text-[#c8b99a]! pointer-events-none">in</div>
+                class="afc-input bg-transparent! border-none! outline-none text-slate-800! text-base font-medium px-2.5 pr-8 py-2 w-full" />
+                <div class="absolute right-2.5 bottom-2 text-base text-slate-400! pointer-events-none">in</div>
             </div>
           </div>
         </div>
@@ -147,45 +147,45 @@ if ( ! defined( 'ABSPATH' ) ) {
 
       <!-- Step 3 -->
       <div class="flex flex-col gap-2">
-        <div class="text-base font-semibold text-[#f0e6d3]! my-1">Step 3: Enter Space Dimensions</div>
-        <div class="border! border-[#E9B535]! px-3! py-3! rounded-2xl! bg-[#E9B535]/5!">
-          <div class="text-sm font-semibold text-[#f0e6d3]! mb-2">Installation Space Dimensions</div>
-          <div class="grid grid-cols-3 border! border-[#5a3f20]! rounded-lg! overflow-hidden">
-            <div class="relative flex flex-col border-r! border-[#5a3f20]!">
-              <div class="text-base font-medium text-[#c8b99a]! px-2.5 py-2 border-b! border-[#5a3f20]! bg-white/3">Height</div>
+        <div class="text-base font-semibold text-slate-700! my-1">Step 3: Enter Space Dimensions</div>
+        <div class="border! border-slate-200! px-3! py-3! rounded-2xl! bg-white!">
+          <div class="text-sm font-semibold text-slate-700! mb-2">Installation Space Dimensions</div>
+          <div class="grid grid-cols-3 border! border-slate-200! rounded-lg! overflow-hidden">
+            <div class="relative flex flex-col border-r! border-slate-200!">
+              <div class="text-base font-medium text-slate-500! px-2.5 py-2 border-b! border-slate-200! bg-slate-50!">Height</div>
               <input type="number" name="space_height" id="afc-space-height" placeholder="Ex: 34" min="0" step="0.1" onkeypress="return /[0-9.]/i.test(event.key)"
-                class="afc-input bg-transparent! border-none! outline-none text-[#f0e6d3]! text-base font-medium px-2.5 pr-8 py-2 w-full" />
-              <div class="absolute right-2.5 bottom-2 text-base text-[#c8b99a]! pointer-events-none">in</div>
+                class="afc-input bg-transparent! border-none! outline-none text-slate-800! text-base font-medium px-2.5 pr-8 py-2 w-full" />
+              <div class="absolute right-2.5 bottom-2 text-base text-slate-400! pointer-events-none">in</div>
             </div>
-            <div class="relative flex flex-col border-r! border-[#5a3f20]!">
-              <div class="text-base font-medium text-[#c8b99a]! px-2.5 py-2 border-b! border-[#5a3f20]! bg-white/3">Width</div>
+            <div class="relative flex flex-col border-r! border-slate-200!">
+              <div class="text-base font-medium text-slate-500! px-2.5 py-2 border-b! border-slate-200! bg-slate-50!">Width</div>
               <input type="number" name="space_width" id="afc-space-width" placeholder="Ex: 30" min="0" step="0.1" onkeypress="return /[0-9.]/i.test(event.key)"
-                class="afc-input bg-transparent! border-none! outline-none text-[#f0e6d3]! text-base font-medium px-2.5 pr-8 py-2 w-full" />
-              <div class="absolute right-2.5 bottom-2 text-base text-[#c8b99a]! pointer-events-none">in</div>
+                class="afc-input bg-transparent! border-none! outline-none text-slate-800! text-base font-medium px-2.5 pr-8 py-2 w-full" />
+              <div class="absolute right-2.5 bottom-2 text-base text-slate-400! pointer-events-none">in</div>
             </div>
             <div class="relative flex flex-col">
-              <div class="text-base font-medium text-[#c8b99a]! px-2.5 py-2 border-b! border-[#5a3f20]! bg-white/3">Depth</div>
+              <div class="text-base font-medium text-slate-500! px-2.5 py-2 border-b! border-slate-200! bg-slate-50!">Depth</div>
               <input type="number" name="space_depth" id="afc-space-depth" placeholder="Ex: 24" min="0" step="0.1" onkeypress="return /[0-9.]/i.test(event.key)"
-                class="afc-input bg-transparent! border-none! outline-none text-[#f0e6d3]! text-base font-medium px-2.5 pr-8 py-2 w-full" />
-              <div class="absolute right-2.5 bottom-2 text-base text-[#c8b99a]! pointer-events-none">in</div>
+                class="afc-input bg-transparent! border-none! outline-none text-slate-800! text-base font-medium px-2.5 pr-8 py-2 w-full" />
+              <div class="absolute right-2.5 bottom-2 text-base text-slate-400! pointer-events-none">in</div>
             </div>
           </div>
         </div>
 
-        <div class="text-xs text-[#7a6a55]! text-center mt-1">
+        <div class="text-xs text-slate-400! text-center mt-1">
           Use decimals only (example: 30.5)
         </div>
 
-        <div class="flex flex-row items-start gap-3 bg-white/6! p-3! rounded-2xl! mt-2 mb-4 min-h-[58px]">
+        <div class="flex flex-row items-start gap-3 bg-white! border border-slate-200! p-3! rounded-2xl! mt-2 mb-4 min-h-[58px] shadow-sm">
           <div class="shrink-0 mt-0.5">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-[#E9B535]!">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-slate-400!">
               <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 0 1 .67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 1 1-.671-1.34l.041-.022ZM12 9a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clip-rule="evenodd" />
             </svg>
           </div>
-          <div class="text-sm text-[#c8b99a]! leading-relaxed">Measure the actual opening or installation space, not the old appliance</div>
+          <div class="text-sm text-slate-500! leading-relaxed">Measure the actual opening or installation space, not the old appliance</div>
         </div>
 
-        <div id="afc-check-btn" class="bg-linear-to-l from-[#E9B535] to-[#B28E72] text-white! px-4 py-4 rounded-2xl text-base font-semibold flex items-center justify-center cursor-pointer tracking-wide shadow-[0_4px_20px_rgba(233,181,53,0.25)] hover:opacity-90 transition-opacity">
+        <div id="afc-check-btn" class="bg-linear-to-r from-[#145880] to-[#22C55E] text-white! px-4 py-4 rounded-2xl text-base font-semibold flex items-center justify-center cursor-pointer tracking-wide shadow-md shadow-slate-300 hover:opacity-90 hover:shadow-lg transition-all">
           Check My Fit
         </div>
 
@@ -194,7 +194,6 @@ if ( ! defined( 'ABSPATH' ) ) {
       </div>
     </form>
   </div>
-
 </div>
 
 
@@ -202,21 +201,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 <!--  RESULT MODAL OVERLAY                                  -->
 <!-- ══════════════════════════════════════════════════════ -->
 <div id="afc-modal-overlay">
-
-  <div id="afc-modal" class="bg-[#F5F6FA]! relative min-w-sm w-full max-w-lg rounded-2xl px-3.5 py-4 shadow-2xl shadow-slate-200/80 overflow-hidden max-h-[90vh] overflow-y-auto">
+  <div id="afc-modal" class="bg-white relative min-w-sm w-full max-w-lg rounded-2xl px-3.5 py-4 shadow-2xl shadow-slate-200/80 overflow-hidden max-h-[90vh] overflow-y-auto">
 
     <!-- close button -->
-    <div id="afc-modal-close" class="bg-gray-700 p-2 rounded-full cursor-pointer shadow-2xl shadow-slate-200/80 absolute top-2 right-2 z-50">
-      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round" class="text-white"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+    <div id="afc-modal-close" class="bg-slate-200 p-2 rounded-full cursor-pointer shadow-sm absolute top-2 right-2 z-50">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round" class="text-slate-600"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
     </div>
 
     <!-- ── Header ── -->
-    <div class="relative flex items-center gap-3 px-5 pt-5 pb-4 border-b border-slate-100 shadow-2xl bg-white shadow-slate-200/80 mb-4 rounded-2xl">
+    <div class="relative flex items-center gap-3 px-5 pt-5 pb-4 border-b border-slate-100 mb-4 rounded-2xl">
       <div id="afc-modal-appliance-icon" class="w-11 h-11 rounded-2xl bg-slate-100 flex items-center justify-center shadow-inner shrink-0">
         <!-- Appliance icon injected by JS -->
       </div>
       <div>
-        <div id="afc-modal-appliance-type" class="text-[15px] font-700 text-slate-800 font-semibold leading-tight">—</div>
+        <div id="afc-modal-appliance-type" class="text-[15px] font-semibold text-slate-800 leading-tight">—</div>
         <div id="afc-modal-date" class="text-[11px] text-slate-400 mt-0.5">—</div>
       </div>
     </div>
@@ -287,37 +285,24 @@ if ( ! defined( 'ABSPATH' ) ) {
           </div>
         </div>
       </div>
-
-      <!-- Clearance Notice -->
-       <!--
-      <div id="afc-clearance-notice" class="flex items-start gap-3 rounded-2xl px-4 py-3">
-        <div id="afc-notice-icon-wrap" class="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center mt-0.5">
-          <span id="afc-notice-icon-char" class="text-white text-[11px] font-bold"></span>
-        </div>
-        <div>
-          <div id="afc-notice-title" class="text-[13px] font-semibold"></div>
-          <div id="afc-notice-sub" class="text-[12px] mt-0.5 leading-snug"></div>
-        </div>
-      </div>
--->
     </div>
 
     <!-- ── App Store CTA Section ── -->
-    <div class="bg-linear-to-br from-slate-800 to-slate-900 mb-5 rounded-2xl px-4 pt-4 pb-4 mt-2">
+    <div class="bg-slate-50 border border-slate-100 mb-5 rounded-2xl px-4 pt-4 pb-4 mt-2">
       <div class="flex items-center gap-2 mb-1">
-        <div class="w-7 h-7 rounded-lg bg-white/10 flex items-center justify-center">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#a5f3fc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <div class="w-7 h-7 rounded-lg bg-slate-200 flex items-center justify-center">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
           </svg>
         </div>
-        <div class="text-[11px] font-semibold text-cyan-300 uppercase tracking-widest">Free Fit Check</div>
+        <div class="text-[11px] font-semibold text-slate-500 uppercase tracking-widest">Free Fit Check</div>
       </div>
-      <div class="text-[13px] text-white font-medium leading-snug mb-3.5">Run 1 <span class="text-cyan-300 font-bold">FREE</span> Fit Check in the app — takes 30 seconds</div>
+      <div class="text-[13px] text-slate-800 font-medium leading-snug mb-3.5">Run 1 <span class="text-sky-600 font-bold">FREE</span> Fit Check in the app — takes 30 seconds</div>
 
       <div class="flex items-center justify-center gap-2">
         <!-- Apple Store Button -->
-        <a href="https://apps.apple.com/jp/app/appliance-fit-check/id6754309083?l=en-US" target="_blank" rel="noopener noreferrer" class="app-btn! flex-1! flex! items-center! justify-center! gap-3! bg-white! rounded-xl! px-3.5! py-2.5! cursor-pointer! hover:bg-slate-50! transition-colors! shadow-md! shadow-black/20! no-underline!">
-          <div class="flex-shrink-0">
+        <a href="https://apps.apple.com/jp/app/appliance-fit-check/id6754309083?l=en-US" target="_blank" rel="noopener noreferrer" class="app-btn! flex-1! flex! items-center! justify-center! gap-3! bg-white! border! border-slate-200 rounded-xl px-3.5! py-2.5! cursor-pointer! hover:bg-slate-50! transition-colors! shadow-sm! no-underline!">
+          <div class="shrink-0">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="#1a1a1a">
               <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
             </svg>
@@ -329,7 +314,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         </a>
 
         <!-- Google Play Button -->
-        <div id="button-google-play" class="app-btn flex-1 flex items-center justify-center gap-3 bg-white rounded-xl px-3.5 py-2.5 cursor-pointer hover:bg-slate-50 transition-colors shadow-md shadow-black/20">
+        <div id="button-google-play" class="app-btn flex-1 flex items-center justify-center gap-3 bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 cursor-pointer hover:bg-slate-50 transition-colors shadow-sm">
           <div class="flex-shrink-0">
             <svg width="20" height="20" viewBox="0 0 24 24">
               <path d="M3,20.5v-17C3,2.91,3.81,2.5,4.5,3l14,8.5L4.5,20C3.81,21.5,3,21.09,3,20.5z" fill="#4CAF50"/>
@@ -353,7 +338,7 @@ if ( ! defined( 'ABSPATH' ) ) {
           <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
           <line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/>
         </svg>
-        <span class="text-[13px] font-semibold text-red-500 group-hover:text-red-600 transition-colors">Export as pdf</span>
+        <span class="text-[13px] font-semibold text-red-500 group-hover:text-red-600 transition-colors">Export as PDF</span>
       </div>
     </div>
 

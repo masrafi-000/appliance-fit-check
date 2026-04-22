@@ -102,7 +102,7 @@
 
     function parseInput(val) {
         var v = parseFloat(val);
-        return (isNaN(v) || v < 0 || v > 200) ? null : v;
+        return (isNaN(v) || v < 0) ? null : v;
     }
 
     function formatDim(val) {
@@ -226,6 +226,12 @@
 
         /* Check Fit — AJAX */
         $checkBtn.on('click', function () {
+            var applianceType = $('#afc-appliance-type').val();
+            if (!applianceType) {
+                openErrorModal('Please select an appliance type before checking.');
+                return;
+            }
+
             var ph = parseInput($('#afc-prod-height').val());
             var pw = parseInput($('#afc-prod-width').val());
             var pd = parseInput($('#afc-prod-depth').val());
@@ -234,7 +240,7 @@
             var sd = parseInput($('#afc-space-depth').val());
 
             if (ph === null || pw === null || pd === null || sh === null || sw === null || sd === null) {
-                openErrorModal('Please enter valid dimensions (0 – 200) in all 6 fields before checking.');
+                openErrorModal('Please enter valid dimensions in all 6 fields before checking.');
                 return;
             }
 
