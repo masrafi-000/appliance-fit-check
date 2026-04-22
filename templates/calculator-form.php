@@ -30,7 +30,7 @@ if ( ! defined( 'ABSPATH' ) ) {
   }
 </style>
 
-<div id="afc-calculator" class="flex flex-col items-center justify-center border! border-[#E9B535]! rounded-2xl! px-2! py-5! max-w-md mx-auto h-auto bg-[#2a1f14]! text-[#f0e6d3]! w-full">
+<div id="afc-calculator" class="flex flex-col items-center justify-center border! border-[#E9B535]! rounded-2xl! px-2! py-5! max-w-lg mx-auto h-auto bg-[#2a1f14]! text-[#f0e6d3]! w-full">
 
   <div class="w-full px-2 py-4">
 
@@ -39,11 +39,11 @@ if ( ! defined( 'ABSPATH' ) ) {
     <form action="submit" class="flex flex-col gap-4">
 
       <div class="flex flex-col gap-2">
-        <label for="afc-appliance-type" class="text-base font-semibold text-[#f0e6d3]!">Step 1: Select Appliance Type</label>
+        <div class="text-base font-semibold text-[#f0e6d3]!">Step 1: Select Appliance Type</div>
         <select
           name="appliance_type"
           id="afc-appliance-type"
-          class="afc-select w-full bg-[#3a2a1a]! text-[#f0e6d3]! border! border-[#6b4f2c]! rounded-xl px-4 py-3 text-sm font-medium cursor-pointer outline-none focus:border-[#E9B535] transition-colors"
+          class="afc-select w-full bg-[#3a2a1a]! text-[#f0e6d3]! border! border-[#6b4f2c]! rounded-xl px-4 py-3 text-base font-medium cursor-pointer outline-none focus:border-[#E9B535] transition-colors"
         >
           <option value="">Select Appliance Type</option>
           <option value="dishwasher">Dishwasher</option>
@@ -53,26 +53,29 @@ if ( ! defined( 'ABSPATH' ) ) {
       </div>
 
       <div class="flex flex-col gap-2 mt-1">
-        <label for="afc-prod-height" class="text-base font-semibold text-[#f0e6d3]! my-1">Step 2: Enter Product dimension</label>
-        <div class="text-sm text-[#9a8870]! text-center">Enter your product dimensions manually (take less than 60 seconds).</div>
+        <div class="text-base font-semibold text-[#f0e6d3]! my-1">Step 2: Enter Product dimension</div>
+        <div class="text-sm text-[#9a8870]! text-left">Enter your product dimensions manually (take less than 60 seconds).</div>
 
         <div class="border! border-[#E9B535]! px-3! py-3! rounded-2xl! bg-[#E9B535]/5!">
           <div class="text-sm font-semibold text-[#f0e6d3]! mb-2">Use exact measurements (example: 30.5)</div>
           <div class="grid grid-cols-3 border! border-[#5a3f20]! rounded-lg! overflow-hidden">
-            <div class="flex flex-col border-r! border-[#5a3f20]!">
-              <div class="text-xs font-medium text-[#c8b99a]! px-2.5 py-2 border-b! border-[#5a3f20]! bg-white/3">Height</div>
-              <input type="number" name="product_height" id="afc-prod-height" placeholder="Height" min="0" step="0.1" onkeypress="return /[0-9.]/i.test(event.key)"
-                class="afc-input bg-transparent! border-none! outline-none text-[#f0e6d3]! text-sm font-medium px-2.5 py-2 w-full" />
+            <div class="relative flex flex-col border-r! border-[#5a3f20]!">
+              <div class="text-base font-medium text-[#c8b99a]! px-2.5 py-2 border-b! border-[#5a3f20]! bg-white/3">Height</div>
+              <input type="number" name="product_height" id="afc-prod-height" placeholder="Ex: 32.5" min="0" step="0.1" onkeypress="return /[0-9.]/i.test(event.key)"
+                class="afc-input bg-transparent! border-none! outline-none text-[#f0e6d3]! text-base font-medium px-2.5 pr-8 py-2 w-full" />
+                <div class="absolute right-2.5 bottom-2 text-base text-[#c8b99a]! pointer-events-none">in</div>
             </div>
-            <div class="flex flex-col border-r! border-[#5a3f20]!">
-              <div class="text-xs font-medium text-[#c8b99a]! px-2.5 py-2 border-b! border-[#5a3f20]! bg-white/3">Width</div>
-              <input type="number" name="product_width" id="afc-prod-width" placeholder="Width" min="0" step="0.1" onkeypress="return /[0-9.]/i.test(event.key)"
-                class="afc-input bg-transparent! border-none! outline-none text-[#f0e6d3]! text-sm font-medium px-2.5 py-2 w-full" />
+            <div class="relative flex flex-col border-r! border-[#5a3f20]!">
+              <div class="text-base font-medium text-[#c8b99a]! px-2.5 py-2 border-b! border-[#5a3f20]! bg-white/3">Width</div>
+              <input type="number" name="product_width" id="afc-prod-width" placeholder="Ex: 30" min="0" step="0.1" onkeypress="return /[0-9.]/i.test(event.key)"
+                class="afc-input bg-transparent! border-none! outline-none text-[#f0e6d3]! text-base font-medium px-2.5 pr-8 py-2 w-full" />
+                <div class="absolute right-2.5 bottom-2 text-base text-[#c8b99a]! pointer-events-none">in</div>
             </div>
-            <div class="flex flex-col">
-              <div class="text-xs font-medium text-[#c8b99a]! px-2.5 py-2 border-b! border-[#5a3f20]! bg-white/3">Depth</div>
-              <input type="number" name="product_depth" id="afc-prod-depth" placeholder="Depth" min="0" step="0.1" onkeypress="return /[0-9.]/i.test(event.key)"
-                class="afc-input bg-transparent! border-none! outline-none text-[#f0e6d3]! text-sm font-medium px-2.5 py-2 w-full" />
+            <div class="relative flex flex-col">
+              <div class="text-base font-medium text-[#c8b99a]! px-2.5 py-2 border-b! border-[#5a3f20]! bg-white/3">Depth</div>
+              <input type="number" name="product_depth" id="afc-prod-depth" placeholder="Ex: 30.2" min="0" step="0.1" onkeypress="return /[0-9.]/i.test(event.key)"
+                class="afc-input bg-transparent! border-none! outline-none text-[#f0e6d3]! text-base font-medium px-2.5 pr-8 py-2 w-full" />
+                <div class="absolute right-2.5 bottom-2 text-base text-[#c8b99a]! pointer-events-none">in</div>
             </div>
           </div>
         </div>
@@ -85,22 +88,25 @@ if ( ! defined( 'ABSPATH' ) ) {
         <div class="border! border-[#E9B535]! rounded-2xl! py-4! px-3! flex flex-col gap-2.5 bg-[#E9B535]/3!">
           <div class="text-sm font-semibold text-[#f0e6d3]!">Installation Space Dimensions</div>
 
-          <div class="border! border-[#5a3f20]! rounded-lg! overflow-hidden">
-            <div class="text-xs font-medium text-[#c8b99a]! px-3 py-2 border-b! border-[#5a3f20]! bg-white/3">Height</div>
-            <input type="number" name="space_height" id="afc-space-height" placeholder="Height" min="0" step="0.1" onkeypress="return /[0-9.]/i.test(event.key)"
-              class="afc-input bg-transparent! border-none! outline-none text-[#f0e6d3]! text-sm font-medium px-3 py-2 w-full" />
+          <div class="relative border! border-[#5a3f20]! rounded-lg! overflow-hidden">
+            <div class="text-base font-medium text-[#c8b99a]! px-3 py-2 border-b! border-[#5a3f20]! bg-white/3 ">Height</div>
+            <input type="number" name="space_height" id="afc-space-height" placeholder="Ex: 34" min="0" step="0.1" onkeypress="return /[0-9.]/i.test(event.key)"
+              class="afc-input bg-transparent! border-none! outline-none text-[#f0e6d3]! text-sm font-medium px-3 pr-10 py-2 w-full" />
+              <div class="absolute right-3 bottom-2 text-base text-[#c8b99a]! pointer-events-none">in</div>
           </div>
 
-          <div class="border! border-[#5a3f20]! rounded-lg! overflow-hidden">
-            <div class="text-xs font-medium text-[#c8b99a]! px-3 py-2 border-b! border-[#5a3f20]! bg-white/3">Width</div>
-            <input type="number" name="space_width" id="afc-space-width" placeholder="Width" min="0" step="0.1" onkeypress="return /[0-9.]/i.test(event.key)"
-              class="afc-input bg-transparent! border-none! outline-none text-[#f0e6d3]! text-sm font-medium px-3 py-2 w-full" />
+          <div class="relative border! border-[#5a3f20]! rounded-lg! overflow-hidden">
+            <div class="text-base font-medium text-[#c8b99a]! px-3 py-2 border-b! border-[#5a3f20]! bg-white/3">Width</div>
+            <input type="number" name="space_width" id="afc-space-width" placeholder="Ex: 30" min="0" step="0.1" onkeypress="return /[0-9.]/i.test(event.key)"
+              class="afc-input bg-transparent! border-none! outline-none text-[#f0e6d3]! text-sm font-medium px-3 pr-10 py-2 w-full" />
+              <div class="absolute right-3 bottom-2 text-base text-[#c8b99a]! pointer-events-none">in</div>
           </div>
 
-          <div class="border! border-[#5a3f20]! rounded-lg! overflow-hidden">
-            <div class="text-xs font-medium text-[#c8b99a]! px-3 py-2 border-b! border-[#5a3f20]! bg-white/3">Depth</div>
-            <input type="number" name="space_depth" id="afc-space-depth" placeholder="Depth" min="0" step="0.1" onkeypress="return /[0-9.]/i.test(event.key)"
-              class="afc-input bg-transparent! border-none! outline-none text-[#f0e6d3]! text-sm font-medium px-3 py-2 w-full" />
+          <div class="relative border! border-[#5a3f20]! rounded-lg! overflow-hidden">
+            <div class="text-base font-medium text-[#c8b99a]! px-3 py-2 border-b! border-[#5a3f20]! bg-white/3">Depth</div>
+            <input type="number" name="space_depth" id="afc-space-depth" placeholder="Ex: 24" min="0" step="0.1" onkeypress="return /[0-9.]/i.test(event.key)"
+              class="afc-input bg-transparent! border-none! outline-none text-[#f0e6d3]! text-sm font-medium px-3 pr-10 py-2 w-full" />
+              <div class="absolute right-3 bottom-2 text-base text-[#c8b99a]! pointer-events-none">in</div>
           </div>
         </div>
 
